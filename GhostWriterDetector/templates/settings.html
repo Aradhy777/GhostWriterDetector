@@ -26,22 +26,12 @@
             <form method="POST">
                 <div class="row g-4">
                     <div class="col-md-6">
-                        <label class="form-label small text-uppercase text-muted letter-spacing-1">Azure OpenAI API Key</label>
-                        <input type="password" name="azure_openai_api_key" class="form-control" placeholder="••••••••••••••••">
-                        {% if errors.azure_openai_api_key %}<div class="text-danger small mt-1">{{ errors.azure_openai_api_key }}</div>{% endif %}
+                        <label class="form-label small text-uppercase text-muted letter-spacing-1">OpenAI API Key</label>
+                        <input type="password" name="openai_api_key" class="form-control" placeholder="sk-••••••••••••••••">
+                        {% if errors.openai_api_key %}<div class="text-danger small mt-1">{{ errors.openai_api_key }}</div>{% endif %}
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label small text-uppercase text-muted letter-spacing-1">Azure OpenAI Endpoint</label>
-                        <input type="text" name="azure_openai_endpoint" class="form-control" value="{{ settings.azure_openai_endpoint }}" placeholder="https://resource.openai.azure.com/">
-                        {% if errors.azure_openai_endpoint %}<div class="text-danger small mt-1">{{ errors.azure_openai_endpoint }}</div>{% endif %}
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label small text-uppercase text-muted letter-spacing-1">Deployment Name</label>
-                        <input type="text" name="azure_openai_deployment_name" class="form-control" value="{{ settings.azure_openai_deployment_name }}" placeholder="gpt-4">
-                        {% if errors.azure_openai_deployment_name %}<div class="text-danger small mt-1">{{ errors.azure_openai_deployment_name }}</div>{% endif %}
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label small text-uppercase text-muted letter-spacing-1">Text Analytics Key</label>
+                        <label class="form-label small text-uppercase text-muted letter-spacing-1">Text Analytics API Key</label>
                         <input type="password" name="azure_text_analytics_api_key" class="form-control" placeholder="••••••••••••••••">
                         {% if errors.azure_text_analytics_api_key %}<div class="text-danger small mt-1">{{ errors.azure_text_analytics_api_key }}</div>{% endif %}
                     </div>
@@ -74,4 +64,4 @@
         </div>
     </div>
 </div>
-{% endblock %}
+{% endblock %}

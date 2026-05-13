@@ -57,9 +57,7 @@ azure_service = AzureTextAnalysisService()
 openai_service = OpenAIService()
 
 SETTING_ENV_MAP = {
-    'azure_openai_api_key': 'AZURE_OPENAI_API_KEY',
-    'azure_openai_endpoint': 'AZURE_OPENAI_ENDPOINT',
-    'azure_openai_deployment_name': 'AZURE_OPENAI_DEPLOYMENT_NAME',
+    'openai_api_key': 'OPENAI_API_KEY',
     'azure_text_analytics_api_key': 'AZURE_TEXT_ANALYTICS_API_KEY',
     'azure_text_analytics_endpoint': 'AZURE_TEXT_ANALYTICS_ENDPOINT'
 }
@@ -83,16 +81,11 @@ def validate_credential_settings(settings_data):
         if not settings_data.get(key, '').strip():
             errors[key] = 'This field is required.'
 
-    for endpoint_key in ['azure_openai_endpoint', 'azure_text_analytics_endpoint']:
-        endpoint = settings_data.get(endpoint_key, '').strip()
-        if endpoint and (not endpoint.startswith('https://') or ' ' in endpoint):
-            errors[endpoint_key] = 'Enter a valid HTTPS endpoint URL.'
+    endpoint = settings_data.get('azure_text_analytics_endpoint', '').strip()
+    if endpoint and (not endpoint.startswith('https://') or ' ' in endpoint):
+        errors['azure_text_analytics_endpoint'] = 'Enter a valid HTTPS endpoint URL.'
 
-    deployment_name = settings_data.get('azure_openai_deployment_name', '').strip()
-    if deployment_name and not re.match(r'^[A-Za-z0-9._-]+$', deployment_name):
-        errors['azure_openai_deployment_name'] = 'Use only letters, numbers, dots, dashes, or underscores.'
-
-    for key in ['azure_openai_api_key', 'azure_text_analytics_api_key']:
+    for key in ['openai_api_key', 'azure_text_analytics_api_key']:
         api_key = settings_data.get(key, '').strip()
         if api_key and len(api_key) < 10:
             errors[key] = 'API key looks too short.'
@@ -117,9 +110,7 @@ def configure_services_from_settings():
         key=settings_data['azure_text_analytics_api_key']
     )
     openai_service.initialize(
-        api_key=settings_data['azure_openai_api_key'],
-        endpoint=settings_data['azure_openai_endpoint'],
-        deployment_name=settings_data['azure_openai_deployment_name']
+        api_key=settings_data['openai_api_key']
     )
 
 
@@ -138,9 +129,7 @@ def settings():
 
     if request.method == 'POST':
         submitted_settings = {
-            'azure_openai_api_key': request.form.get('azure_openai_api_key', '').strip(),
-            'azure_openai_endpoint': request.form.get('azure_openai_endpoint', '').strip(),
-            'azure_openai_deployment_name': request.form.get('azure_openai_deployment_name', '').strip(),
+            'openai_api_key': request.form.get('openai_api_key', '').strip(),
             'azure_text_analytics_api_key': request.form.get('azure_text_analytics_api_key', '').strip(),
             'azure_text_analytics_endpoint': request.form.get('azure_text_analytics_endpoint', '').strip()
         }
