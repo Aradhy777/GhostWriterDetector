@@ -1,0 +1,67 @@
+# Environment
+.env
+.env.local
+.env.*.local
+.venv
+venv/
+ENV/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Database
+database/*.db
+*.db
+*.sqlite
+*.sqlite3
+
+# Uploads and exports
+uploads/*
+!uploads/.gitkeep
+exports/*
+!exports/.gitkeep
+instance/*
+!instance/.gitkeep
+
+# Charts
+static/charts/*.png
+static/charts/*.jpg
+!static/charts/.gitkeep
+
+# Cache
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+
+# OS
+Thumbs.db
+.DS_Store

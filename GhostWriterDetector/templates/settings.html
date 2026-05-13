@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+
+{% block title %}Settings - GhostWriter Detector{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center animate-fade-in">
+    <div class="col-lg-10">
+        <div class="glass-card">
+            <div class="mb-5">
+                <h1 class="display-6 fw-bold mb-2">System Configuration</h1>
+                <p class="text-muted">Manage your cloud authentication and analysis parameters</p>
+            </div>
+
+            {% if success_message %}
+            <div class="alert alert-success bg-success bg-opacity-10 border-success border-opacity-25 text-success mb-4 animate-fade-in">
+                <span class="me-2">✅</span> {{ success_message }}
+            </div>
+            {% endif %}
+
+            {% if errors and errors|length > 0 %}
+            <div class="alert alert-danger bg-danger bg-opacity-10 border-danger border-opacity-25 text-danger mb-4 animate-fade-in">
+                <span class="me-2">⚠️</span> Please fix the highlighted configuration errors.
+            </div>
+            {% endif %}
+
+            <form method="POST">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <label class="form-label small text-uppercase text-muted letter-spacing-1">Azure OpenAI API Key</label>
+                        <input type="password" name="azure_openai_api_key" class="form-control" placeholder="••••••••••••••••">
+                        {% if errors.azure_openai_api_key %}<div class="text-danger small mt-1">{{ errors.azure_openai_api_key }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small text-uppercase text-muted letter-spacing-1">Azure OpenAI Endpoint</label>
+                        <input type="text" name="azure_openai_endpoint" class="form-control" value="{{ settings.azure_openai_endpoint }}" placeholder="https://resource.openai.azure.com/">
+                        {% if errors.azure_openai_endpoint %}<div class="text-danger small mt-1">{{ errors.azure_openai_endpoint }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small text-uppercase text-muted letter-spacing-1">Deployment Name</label>
+                        <input type="text" name="azure_openai_deployment_name" class="form-control" value="{{ settings.azure_openai_deployment_name }}" placeholder="gpt-4">
+                        {% if errors.azure_openai_deployment_name %}<div class="text-danger small mt-1">{{ errors.azure_openai_deployment_name }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small text-uppercase text-muted letter-spacing-1">Text Analytics Key</label>
+                        <input type="password" name="azure_text_analytics_api_key" class="form-control" placeholder="••••••••••••••••">
+                        {% if errors.azure_text_analytics_api_key %}<div class="text-danger small mt-1">{{ errors.azure_text_analytics_api_key }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label small text-uppercase text-muted letter-spacing-1">Text Analytics Endpoint</label>
+                        <input type="text" name="azure_text_analytics_endpoint" class="form-control" value="{{ settings.azure_text_analytics_endpoint }}" placeholder="https://resource.cognitiveservices.azure.com/">
+                        {% if errors.azure_text_analytics_endpoint %}<div class="text-danger small mt-1">{{ errors.azure_text_analytics_endpoint }}</div>{% endif %}
+                    </div>
+                </div>
+
+                <div class="mt-5 d-flex gap-3 pt-4 border-top border-dark">
+                    <button type="submit" class="btn btn-primary px-4">
+                        Save Configuration
+                    </button>
+                    <a href="/analyze" class="btn btn-outline-primary px-4">
+                        Discard Changes
+                    </a>
+                </div>
+            </form>
+        </div>
+        
+        <div class="mt-4 p-4 glass-card bg-opacity-10 border-warning border-opacity-25">
+            <div class="d-flex align-items-start gap-3">
+                <div class="text-warning fs-4">💡</div>
+                <div>
+                    <h6 class="text-warning mb-1">Security Note</h6>
+                    <p class="text-muted small mb-0">Your credentials are encrypted before storage. These settings are required for the AI engine to function correctly during analysis.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

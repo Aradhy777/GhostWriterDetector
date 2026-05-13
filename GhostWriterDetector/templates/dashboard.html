@@ -1,0 +1,116 @@
+{% extends "layout.html" %}
+
+{% block title %}Dashboard - GhostWriter Detector{% endblock %}
+
+{% block content %}
+<div class="animate-fade-in">
+    <div class="d-flex align-items-center justify-content-between mb-5">
+        <div>
+            <h1 class="display-6 fw-bold mb-1">Analytics Dashboard</h1>
+            <p class="text-muted mb-0">Overview of your content authentication history</p>
+        </div>
+        <a href="/analyze" class="btn btn-primary">
+            + New Analysis
+        </a>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <div class="dashboard-card">
+                <div class="card-icon">📊</div>
+                <div class="card-value">{{ total_analyses }}</div>
+                <div class="card-label">Total Analyses</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="dashboard-card" style="border-bottom: 3px solid var(--success);">
+                <div class="card-icon" style="background: rgba(16, 185, 129, 0.1);">👤</div>
+                <div class="card-value">{{ "%.0f"|format(avg_human_score) }}%</div>
+                <div class="card-label">Avg Human Score</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="dashboard-card" style="border-bottom: 3px solid var(--danger);">
+                <div class="card-icon" style="background: rgba(239, 68, 68, 0.1);">🤖</div>
+                <div class="card-value">{{ "%.0f"|format(avg_ai_score) }}%</div>
+                <div class="card-label">Avg AI Probability</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="dashboard-card" style="border-bottom: 3px solid var(--secondary);">
+                <div class="card-icon" style="background: rgba(6, 182, 212, 0.1);">📖</div>
+                <div class="card-value">{{ "%.0f"|format(avg_readability) }}</div>
+                <div class="card-label">Avg Readability</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card mb-5">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h5 class="mb-0 text-uppercase small letter-spacing-1 text-primary">Recent Activity</h5>
+            <a href="/history" class="text-primary small text-decoration-none">View All →</a>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Analysis ID</th>
+                        <th>Status</th>
+                        <th>Human Score</th>
+                        <th>AI Probability</th>
+                        <th>Complexity</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for analysis in recent_analyses %}
+                    <tr>
+                        <td class="fw-bold text-white">#{{ analysis.id }}</td>
+                        <td>
+                            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2">Completed</span>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="small">{{ analysis.human_score }}%</span>
+                                <div class="progress flex-grow-1" style="height: 4px; background: rgba(255,255,255,0.05);">
+                                    <div class="progress-bar bg-success" style="width: {{ analysis.human_score }}%"></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="small">{{ analysis.ai_score }}%</span>
+                                <div class="progress flex-grow-1" style="height: 4px; background: rgba(255,255,255,0.05);">
+                                    <div class="progress-bar bg-danger" style="width: {{ analysis.ai_score }}%"></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{ analysis.readability }}/100</td>
+                        <td class="small">{{ analysis.created_at }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center py-5 text-muted">
+                            No recent activity found. Start your first analysis to see data here.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% if total_analyses == 0 %}
+    <div class="empty-state glass-card py-5">
+        <div class="display-1 mb-3 opacity-25">📭</div>
+        <h4 class="fw-bold">No Data Points Yet</h4>
+        <p class="text-muted mb-4">You haven't performed any linguistic analyses yet.</p>
+        <a href="/analyze" class="btn btn-primary px-4">
+            Create First Analysis
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+

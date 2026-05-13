@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}Error - GhostWriter Detector{% endblock %}
+
+{% block content %}
+<div class="row animate-fade-in py-5">
+    <div class="col-lg-6 mx-auto text-center py-5">
+        <div class="glass-card py-5">
+            <div class="display-1 mb-4">🤖</div>
+            <h1 class="display-6 fw-bold text-danger mb-3">System Anomaly</h1>
+            <p class="text-muted fs-5 mb-4">{{ message or "An unexpected error occurred during processing." }}</p>
+            
+            <div class="d-flex justify-content-center gap-3">
+                <a href="/analyze" class="btn btn-primary px-4">Try Again</a>
+                <a href="/" class="btn btn-outline-primary px-4">Return Home</a>
+            </div>
+            
+            <p class="mt-5 small text-muted">If this persists, please check your <a href="/settings" class="text-primary text-decoration-none">Azure Configuration</a>.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

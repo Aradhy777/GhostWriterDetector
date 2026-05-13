@@ -1,0 +1,170 @@
+{% extends "layout.html" %}
+
+{% block title %}Report - GhostWriter Detector{% endblock %}
+
+{% block content %}
+<div class="row animate-fade-in">
+    <div class="col-lg-10 mx-auto">
+        <div class="d-flex justify-content-between align-items-end mb-4">
+            <div>
+                <h1 class="display-6 fw-bold mb-1">Analysis Report</h1>
+                <p class="text-muted mb-0">Reference ID: <span class="text-primary">#{{ analysis.id }}</span> • Generated on {{ analysis.created_at }}</p>
+            </div>
+            <div class="d-flex gap-2">
+                <button onclick="window.print()" class="btn btn-outline-primary btn-sm px-3">
+                    🖨️ Print
+                </button>
+                <a href="/api/export/{{ analysis.id }}" class="btn btn-outline-primary btn-sm px-3">
+                    📥 Export
+                </a>
+            </div>
+        </div>
+        
+        <div class="glass-card mb-4">
+            <div class="row g-4 mb-5">
+                <div class="col-md-6">
+                    <div class="p-4 rounded-4 bg-primary bg-opacity-10 border border-primary border-opacity-25 text-center h-100">
+                        <div class="display-4 fw-bold text-primary mb-1">{{ analysis.human_score }}%</div>
+                        <div class="text-uppercase small letter-spacing-1 fw-semibold text-primary">Human-like Writing</div>
+                        <p class="text-muted small mt-2 mb-0">Probability of natural human origin</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-4 rounded-4 bg-danger bg-opacity-10 border border-danger border-opacity-25 text-center h-100">
+                        <div class="display-4 fw-bold text-danger mb-1">{{ analysis.ai_score }}%</div>
+                        <div class="text-uppercase small letter-spacing-1 fw-semibold text-danger">AI-assisted Writing</div>
+                        <p class="text-muted small mt-2 mb-0">Probability of algorithmic generation</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-5">
+                <h5 class="fw-bold mb-4 d-flex align-items-center">
+                    <span class="badge bg-primary me-2 p-2"></span> Writing Characteristics
+                </h5>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="p-3 border border-dark rounded-3 bg-dark bg-opacity-25">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="small text-muted">Vocabulary Diversity</span>
+                                <span class="small fw-bold">{{ analysis.vocabulary_score }}%</span>
+                            </div>
+                            <div class="progress" style="height: 6px;">
+                                <div class="progress-bar" style="width: {{ analysis.vocabulary_score }}%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 border border-dark rounded-3 bg-dark bg-opacity-25">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="small text-muted">Sentence Complexity</span>
+                                <span class="small fw-bold">{{ analysis.sentence_complexity }}%</span>
+                            </div>
+                            <div class="progress" style="height: 6px;">
+                                <div class="progress-bar" style="width: {{ analysis.sentence_complexity }}%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 border border-dark rounded-3 bg-dark bg-opacity-25">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="small text-muted">Readability</span>
+                                <span class="small fw-bold">{{ analysis.readability }}%</span>
+                            </div>
+                            <div class="progress" style="height: 6px;">
+                                <div class="progress-bar" style="width: {{ analysis.readability }}%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 border border-dark rounded-3 bg-dark bg-opacity-25">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="small text-muted">Emotional Variation</span>
+                                <span class="small fw-bold">{{ analysis.emotional_variation }}%</span>
+                            </div>
+                            <div class="progress" style="height: 6px;">
+                                <div class="progress-bar" style="width: {{ analysis.emotional_variation }}%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 border border-dark rounded-3 bg-dark bg-opacity-25">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="small text-muted">Repetition Control</span>
+                                <span class="small fw-bold">{{ 100 - analysis.repetition_score }}%</span>
+                            </div>
+                            <div class="progress" style="height: 6px;">
+                                <div class="progress-bar" style="width: {{ 100 - analysis.repetition_score }}%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 border border-dark rounded-3 bg-dark bg-opacity-25">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="small text-muted">Formality Level</span>
+                                <span class="small fw-bold">{{ analysis.formality_score }}%</span>
+                            </div>
+                            <div class="progress" style="height: 6px;">
+                                <div class="progress-bar" style="width: {{ analysis.formality_score }}%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-5">
+                <h5 class="fw-bold mb-4 d-flex align-items-center">
+                    <span class="badge bg-primary me-2 p-2"></span> Text Statistics
+                </h5>
+                <div class="row g-3">
+                    <div class="col-6 col-md-3">
+                        <div class="p-3 border border-dark rounded-3 text-center">
+                            <div class="h3 fw-bold mb-0">{{ analysis.word_count }}</div>
+                            <div class="small text-muted">Words</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="p-3 border border-dark rounded-3 text-center">
+                            <div class="h3 fw-bold mb-0">{{ analysis.sentence_count }}</div>
+                            <div class="small text-muted">Sentences</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="p-3 border border-dark rounded-3 text-center">
+                            <div class="h3 fw-bold mb-0">{{ "%.1f"|format(analysis.avg_word_length) }}</div>
+                            <div class="small text-muted">Avg Word Len</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="p-3 border border-dark rounded-3 text-center">
+                            <div class="h3 fw-bold mb-0">{{ "%.0f"|format(analysis.unique_words_ratio) }}%</div>
+                            <div class="small text-muted">Unique Ratio</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            {% if report %}
+            <div class="mb-0">
+                <h5 class="fw-bold mb-4 d-flex align-items-center">
+                    <span class="badge bg-primary me-2 p-2"></span> Full Linguistic Analysis
+                </h5>
+                <div class="p-4 border border-dark rounded-4 bg-dark bg-opacity-50">
+                    <p class="mb-0 text-muted lh-lg" style="white-space: pre-wrap; font-family: 'Inter', sans-serif;">{{ report }}</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="d-flex justify-content-between mt-4 mb-5">
+            <a href="/history" class="btn btn-link text-decoration-none text-muted">
+                ← Back to History
+            </a>
+            <div class="d-flex gap-2">
+                <a href="/analyze" class="btn btn-primary px-4">Analyze New Text</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

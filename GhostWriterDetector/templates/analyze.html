@@ -1,0 +1,225 @@
+{% extends "layout.html" %}
+
+{% block title %}Analyze Text - GhostWriter Detector{% endblock %}
+
+{% block content %}
+<div class="row animate-fade-in">
+    <div class="col-lg-10 mx-auto">
+        <div class="text-center mb-5">
+            <h1 class="display-5 fw-bold mb-3">Content Analysis Engine</h1>
+            <p class="text-muted">Upload your content for deep linguistic scanning</p>
+        </div>
+        
+        {% if error %}
+        <div class="alert alert-danger alert-dismissible fade show glass-card border-danger mb-4" role="alert">
+            <div class="d-flex align-items-center">
+                <span class="fs-4 me-3">⚠️</span>
+                <div>
+                    <strong class="text-white">Analysis Error</strong><br>
+                    <span class="small">{{ error }}</span>
+                </div>
+            </div>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+        </div>
+        {% endif %}
+        
+        <div class="analysis-form-container glass-card mb-5">
+            <form method="POST">
+                <div class="mb-4">
+                    <label for="text" class="form-label text-muted small text-uppercase letter-spacing-1">Input Source Text</label>
+                    <textarea class="form-control" id="text" name="text" rows="12" 
+                               placeholder="Paste the content you wish to authenticate..." required>{{ request.form.text if request.form.text else '' }}</textarea>
+                    <div class="d-flex justify-content-between mt-2 px-1">
+                        <small class="text-muted">Minimum 20 characters required</small>
+                        <small class="text-muted" id="char-count">0 / 50,000</small>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg w-100 py-3 shadow-lg">
+                    <span class="me-2">🔍</span> Run Deep Analysis
+                </button>
+            </form>
+        </div>
+        
+        {% if result %}
+        <div class="analysis-results mt-5 pt-4" id="results">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h2 class="h3 mb-0">Analysis Report</h2>
+                <span class="badge bg-primary px-3 py-2">ID: #{{ result.id }}</span>
+            </div>
+            
+            <div class="row mb-5">
+                <div class="col-md-6 mb-4">
+                    <div class="score-card human-score glass-card h-100">
+                        <div class="score-label text-uppercase small letter-spacing-1 mb-2">Human Authenticity</div>
+                        <div class="score-value">{{ result.human_score }}%</div>
+                        <p class="text-muted small">Matches natural human writing patterns</p>
+                        <div class="score-bar">
+                            <div class="score-fill bg-success" style="width: {{ result.human_score }}%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="score-card ai-score glass-card h-100">
+                        <div class="score-label text-uppercase small letter-spacing-1 mb-2">AI Probability</div>
+                        <div class="score-value">{{ result.ai_score }}%</div>
+                        <p class="text-muted small">Likelihood of machine generation</p>
+                        <div class="score-bar">
+                            <div class="score-fill bg-danger" style="width: {{ result.ai_score }}%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="glass-card mb-5 p-4 border-start border-primary border-4">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <div class="card-icon bg-primary text-white mb-0">🛡️</div>
+                    </div>
+                    <div class="col">
+                        <h5 class="mb-1">Analysis Confidence: <span class="text-primary">{{ result.confidence }}%</span></h5>
+                        <p class="text-muted mb-0 small">This indicates the cross-metric consistency of our findings.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-lg-7">
+                    <div class="glass-card h-100">
+                        <h5 class="mb-4 text-uppercase small letter-spacing-1 text-primary">Linguistic Metrics</h5>
+                        
+                        <div class="metric-item">
+                            <div class="metric-header">
+                                <span class="metric-name">Vocabulary Richness</span>
+                                <span class="text-white small">{{ result.vocabulary_score }}%</span>
+                            </div>
+                            <div class="metric-progress">
+                                <div class="metric-fill" style="width: {{ result.vocabulary_score }}%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="metric-item">
+                            <div class="metric-header">
+                                <span class="metric-name">Sentence Complexity</span>
+                                <span class="text-white small">{{ result.sentence_complexity }}%</span>
+                            </div>
+                            <div class="metric-progress">
+                                <div class="metric-fill" style="width: {{ result.sentence_complexity }}%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="metric-item">
+                            <div class="metric-header">
+                                <span class="metric-name">Readability Index</span>
+                                <span class="text-white small">{{ result.readability_score }}%</span>
+                            </div>
+                            <div class="metric-progress">
+                                <div class="metric-fill" style="width: {{ result.readability_score }}%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="metric-item">
+                            <div class="metric-header">
+                                <span class="metric-name">Emotional Variation</span>
+                                <span class="text-white small">{{ result.emotional_variation }}%</span>
+                            </div>
+                            <div class="metric-progress">
+                                <div class="metric-fill" style="width: {{ result.emotional_variation }}%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="metric-item">
+                            <div class="metric-header">
+                                <span class="metric-name">Linguistic Entropy</span>
+                                <span class="text-white small">{{ 100 - result.repetition_score }}%</span>
+                            </div>
+                            <div class="metric-progress">
+                                <div class="metric-fill" style="width: {{ 100 - result.repetition_score }}%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="glass-card h-100">
+                        <h5 class="mb-4 text-uppercase small letter-spacing-1 text-primary">Text Statistics</h5>
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <div class="p-3 bg-dark bg-opacity-50 rounded-3 border border-dark">
+                                    <div class="text-muted small mb-1">Words</div>
+                                    <div class="h4 mb-0">{{ result.word_count }}</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3 bg-dark bg-opacity-50 rounded-3 border border-dark">
+                                    <div class="text-muted small mb-1">Sentences</div>
+                                    <div class="h4 mb-0">{{ result.sentence_count }}</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="p-3 bg-dark bg-opacity-50 rounded-3 border border-dark">
+                                    <div class="text-muted small mb-1">Avg Word Length</div>
+                                    <div class="h4 mb-0 text-secondary">{{ "%.1f"|format(result.avg_word_length) }} <small class="text-muted fs-6">chars</small></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 pt-4 border-top border-dark">
+                            <h5 class="mb-3 text-uppercase small letter-spacing-1 text-primary">Export Report</h5>
+                            <div class="d-grid gap-2">
+                                <a href="/api/export/{{ result.id }}" class="btn btn-outline-primary btn-sm py-2">
+                                    📥 Export Metadata (JSON)
+                                </a>
+                                <a href="/api/export-text/{{ result.id }}" class="btn btn-outline-primary btn-sm py-2">
+                                    📄 Download Full Report
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if result.chart_authenticity or result.chart_metrics or result.chart_sentences %}
+            <div class="mb-5">
+                <h4 class="mb-4 display-7">Visual Data Breakdown</h4>
+                <div class="row g-4">
+                    {% if result.chart_authenticity %}
+                    <div class="col-md-6">
+                        <div class="glass-card">
+                            <h6 class="text-muted small text-uppercase mb-3">Authenticity Map</h6>
+                            <img src="{{ url_for('static', filename='charts/' + result.chart_authenticity) }}" class="img-fluid rounded-3" alt="Authenticity Chart">
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if result.chart_metrics %}
+                    <div class="col-md-6">
+                        <div class="glass-card">
+                            <h6 class="text-muted small text-uppercase mb-3">Metric Signature</h6>
+                            <img src="{{ url_for('static', filename='charts/' + result.chart_metrics) }}" class="img-fluid rounded-3" alt="Metrics Chart">
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const textarea = document.getElementById('text');
+    const charCount = document.getElementById('char-count');
+    
+    function updateCount() {
+        const count = textarea.value.length;
+        charCount.textContent = count.toLocaleString() + ' / 50,000';
+        if (count > 45000) charCount.classList.add('text-danger');
+        else charCount.classList.remove('text-danger');
+    }
+    
+    textarea.addEventListener('input', updateCount);
+    updateCount();
+});
+</script>
+{% endblock %}
+

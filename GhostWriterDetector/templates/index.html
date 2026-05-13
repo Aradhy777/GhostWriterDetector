@@ -1,0 +1,107 @@
+{% extends "layout.html" %}
+
+{% block title %}Home - GhostWriter Detector{% endblock %}
+
+{% block content %}
+<section class="hero-section animate-fade-in">
+    <div class="row align-items-center">
+        <div class="col-lg-10 mx-auto text-center">
+            <h6 class="hero-subtitle">Advanced Content Authentication</h6>
+            <h1 class="hero-title">Unmask the Ghost <br>in Your Writing</h1>
+            <p class="hero-description">
+                The most advanced AI detection system designed for academic integrity and content authenticity. 
+                Using multi-dimensional linguistic analysis to separate human creativity from machine generation.
+            </p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="/analyze" class="btn btn-primary btn-lg">
+                    Start Analysis Now
+                </a>
+                <a href="/dashboard" class="btn btn-outline-primary btn-lg">
+                    View Statistics
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="features-section mb-5">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="feature-card animate-fade-in" style="animation-delay: 0.1s;">
+                <div class="feature-icon">⚡</div>
+                <h3>Linguistic Velocity</h3>
+                <p>Analyze text at lightning speed using optimized pattern recognition algorithms.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card animate-fade-in" style="animation-delay: 0.2s;">
+                <div class="feature-icon">🧠</div>
+                <h3>Deep Semantics</h3>
+                <p>Go beyond keywords. We analyze emotional variation and structural complexity.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card animate-fade-in" style="animation-delay: 0.3s;">
+                <div class="feature-icon">🛡️</div>
+                <h3>Integrity First</h3>
+                <p>Ensure academic and professional standards are maintained with precise detection.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if stats.total > 0 %}
+<section class="stats-section mb-5 glass-card animate-fade-in">
+    <div class="row text-center align-items-center">
+        <div class="col-md-4 border-end border-dark">
+            <div class="stat-box">
+                <h4 class="stat-number">{{ stats.total }}</h4>
+                <p class="stat-label">Total Analyses</p>
+            </div>
+        </div>
+        <div class="col-md-4 border-end border-dark">
+            <div class="stat-box">
+                <h4 class="stat-number">{{ "%.0f"|format(stats.avg_human_score) }}%</h4>
+                <p class="stat-label">Avg Human Authenticity</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-box">
+                <h4 class="stat-number">{{ "%.0f"|format(stats.avg_readability) }}</h4>
+                <p class="stat-label">Avg Readability Score</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="how-it-works mb-5 animate-fade-in">
+    <div class="text-center mb-5">
+        <h2 class="display-6 fw-bold">Simple 4-Step Process</h2>
+        <p class="text-muted">How our engine processes your content</p>
+    </div>
+    <div class="row">
+        <div class="col-md-3 text-center mb-4">
+            <div class="step-circle">1</div>
+            <h5>Input Text</h5>
+            <p class="text-muted">Paste your content into our analysis engine</p>
+        </div>
+        <div class="col-md-3 text-center mb-4">
+            <div class="step-circle">2</div>
+            <h5>Feature Extraction</h5>
+            <p class="text-muted">We extract over 50 linguistic data points</p>
+        </div>
+        <div class="col-md-3 text-center mb-4">
+            <div class="step-circle">3</div>
+            <h5>AI Comparison</h5>
+            <p class="text-muted">Scores are compared against known AI models</p>
+        </div>
+        <div class="col-md-3 text-center mb-4">
+            <div class="step-circle">4</div>
+            <h5>Final Report</h5>
+            <p class="text-muted">Get a comprehensive PDF-ready analysis</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
