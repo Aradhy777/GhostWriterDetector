@@ -44,5 +44,6 @@ class Analysis(db.Model):
             'sentiment_label': self.sentiment_label,
             'sentence_count': self.sentence_count,
             'word_count': self.word_count,
+            'avg_word_length': self.avg_word_length,
             'created_at': self.created_at.strftime('%Y-%m-%d %H:%M:%S')
         }
