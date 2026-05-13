@@ -107,6 +107,17 @@ Visit `http://localhost:5000` in your browser.
 - Export as TXT for documentation
 - Print reports directly
 
+## Deploying on Railway
+
+If you deploy from the nested `GhostWriterDetector/` folder instead of the repo root, Railway can still use the same app.
+
+1. Use `GhostWriterDetector/Procfile` as the start command source.
+2. Install dependencies from `GhostWriterDetector/requirements.txt`.
+3. Set the same environment variables as the root README describes.
+4. Keep `PORT` unset locally; Railway provides it automatically in production.
+
+The app binds to `0.0.0.0:$PORT` through Gunicorn, which is what Railway expects.
+
 ## Analysis Metrics
 
 The application analyzes:

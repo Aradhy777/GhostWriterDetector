@@ -107,6 +107,22 @@ Visit `http://localhost:5000` in your browser.
 - Export as TXT for documentation
 - Print reports directly
 
+## Deploying on Railway
+
+This repository is set up to deploy from the repo root on Railway.
+
+1. Create a new Railway project from this GitHub repository.
+2. Set the start command to use the bundled `Procfile`, or leave Railway to detect it automatically.
+3. Make sure the build uses the root `requirements.txt`, which forwards to the app dependencies in `GhostWriterDetector/requirements.txt`.
+4. Add these environment variables in Railway if you want cloud analysis features:
+   - `SECRET_KEY`
+   - `OPENAI_API_KEY`
+   - `AZURE_TEXT_ANALYTICS_API_KEY`
+   - `AZURE_TEXT_ANALYTICS_ENDPOINT`
+5. Deploy the service and open the generated Railway URL.
+
+If you do not set the optional AI environment variables, the app still runs with local analysis only.
+
 ## Analysis Metrics
 
 The application analyzes:
