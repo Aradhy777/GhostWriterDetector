@@ -57,18 +57,20 @@ pip install -r requirements.txt
 ### 4. Configure Environment
 Copy `.env.example` to `.env` and configure:
 ```bash
-cp .env .env
+cp .env.example .env
 ```
 
 Edit `.env`:
 ```
 FLASK_ENV=development
 FLASK_DEBUG=True
-SECRET_KEY=your-secret-key-here
-AZURE_ENDPOINT=https://your-resource.cognitiveservices.azure.com/
-AZURE_KEY=your_azure_key_here
-OPENAI_API_KEY=your_openai_api_key_here
+SECRET_KEY=replace-with-a-long-random-secret
+OPENAI_API_KEY=
+AZURE_TEXT_ANALYTICS_API_KEY=
+AZURE_TEXT_ANALYTICS_ENDPOINT=
 ```
+
+Keep `.env` out of version control; it is already ignored by git.
 
 ### 5. Run Application
 ```bash

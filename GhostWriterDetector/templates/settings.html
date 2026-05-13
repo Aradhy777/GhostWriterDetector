@@ -27,12 +27,12 @@
                 <div class="row g-4">
                     <div class="col-md-6">
                         <label class="form-label small text-uppercase text-muted letter-spacing-1">OpenAI API Key</label>
-                        <input type="password" name="openai_api_key" class="form-control" placeholder="sk-••••••••••••••••">
+                        <input type="password" name="openai_api_key" class="form-control" placeholder="Enter your OpenAI API key">
                         {% if errors.openai_api_key %}<div class="text-danger small mt-1">{{ errors.openai_api_key }}</div>{% endif %}
                     </div>
                     <div class="col-md-6">
                         <label class="form-label small text-uppercase text-muted letter-spacing-1">Text Analytics API Key</label>
-                        <input type="password" name="azure_text_analytics_api_key" class="form-control" placeholder="••••••••••••••••">
+                        <input type="password" name="azure_text_analytics_api_key" class="form-control" placeholder="Enter your Text Analytics API key">
                         {% if errors.azure_text_analytics_api_key %}<div class="text-danger small mt-1">{{ errors.azure_text_analytics_api_key }}</div>{% endif %}
                     </div>
                     <div class="col-md-12">
